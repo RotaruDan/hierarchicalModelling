@@ -1,2 +1,2 @@
-# mesh
-OpenGL Mesh of a smooth curve
+# hierarchicalModelling
+Hierarchical modelling of a scene

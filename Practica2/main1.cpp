@@ -6,14 +6,13 @@
 #include <gl/GLU.h>
 
 #include <GL/freeglut.h>
-#include "Group.h"
-#include "Axis.h"
-#include "Malla.h"
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
+
+#include "ObjetoCompuesto.h"
 using namespace std;
 //---------------------------------------------------------------------------
 
@@ -36,9 +35,10 @@ struct viewVolume{GLdouble xRight, xLeft;
 
 GLdouble scale = 1;
 viewCamera * currentView = &initial;
+GLdouble xAngle, yAngle, zAngle;
 
 // Scene
-Group root;
+ObjetoCompuesto root;
 
 // prototipos
 void updateProjection();
@@ -68,95 +68,7 @@ int main(int argc, char* argv[]){
 	// OpenGL basic setting
 	initGL();
 
-	// Axis for debugging
-	Axis axis;
-	axis.setColor(1, 1, 1, 1);
-	root.addChildren(&axis);
-
 	// iniciar la escena desde la raiz
-
-	string STRING;
-	ifstream infile;
-	infile.open ("staff.outline");
-	getline(infile, STRING);
-	getline(infile, STRING);
-	int vertexNumber = stoi(STRING);
-	getline(infile, STRING);	
-	getline(infile, STRING);	
-	getline(infile, STRING);
-	getline(infile, STRING);	
-	getline(infile, STRING);		
-	
-	vector<string> res;
-	int i = 0;
-	while(!infile.eof()) {
-		getline(infile,STRING); // Saves the line in STRING.
-		split(STRING, "\t", res);
-	}
-	infile.close();
-
-	int m = vertexNumber; //número de puntos en el perfil original
-	PuntoVector3D** profile = new PuntoVector3D*[m];
-	for(int i = 0; i < m; ++i) {
-		int idx = 2 * i;
-		PuntoVector3D *pv3d = new PuntoVector3D(stof(res[idx]), stof(res[idx + 1]), 0, 1);
-		profile[i] = pv3d;
-	}
-	int n = 100; //número de rotaciones
-
-	//Tamaños de los arrays
-	int vertexCount = n * m;
-	int facesCount = n*(m-1);
-	int normalsCount = facesCount;
-	
-	//Creación de los arrays
-	PuntoVector3D** vertex = new PuntoVector3D*[vertexCount];
-	PuntoVector3D** normals = new PuntoVector3D*[normalsCount];
-	Cara** faces = new Cara*[facesCount];
-	
-	//Colocar el perfil original en la tabla de vertices
-	for(int j = 0; j < m; ++j) {
-		vertex[j] = profile[j]->clonar();
-	}
-	
-	//Vertices de la malla
-	for(int i = 1; i < n; ++i) {
-		double theta = i * 360 / (double) n;
-		double c = cos(theta);
-		double s = sin(theta);
-
-		//R_y es la matriz de rotación sobre el eje Y
-		for(int j = 0; j < m; ++j){
-			int index = i * m + j;
-			//Transformar el punto j‐ésimo del perfil original
-			double x = c * profile[j]->getX() + s * profile[j]->getZ();
-			double z = -s * profile[j]->getX() + c * profile[j]->getZ();
-			PuntoVector3D* p = new PuntoVector3D(x, profile[j]->getY(), z, 1);
-			vertex[index] = p;
-		}
-	}
-
-	
-	//Construcción de las caras
-	int faceIndex = 0;
-	for(int i = 0; i < n; ++i) { //unir el perfil i‐ésimo con el (i+1)%n‐ésimo
-		for(int j = 0; j < m; ++j) { //este vértice cierra una cara
-			int index = i * m + j;
-			int* nv = new int[4];
-			nv[0] = index;
-			nv[1] = (index + m) % vertexCount;
-			nv[2] = (index + 1 + m) % vertexCount;
-			nv[3] = index + 1;
-			Cara* face = new Cara(4, nv, faceIndex);
-			faces[faceIndex] = face;
-			++faceIndex;
-		}
-	}
-	
-	Malla malla(vertexCount, normalsCount, facesCount, vertex, normals, faces);
-	malla.newelliza();
-	malla.setColor(0, 0, 1, 1);
-	root.addChildren(&malla);
   
 	initScene();
 	// Classic glut's main loop can be stopped after X-closing the window, using freeglut's setting
@@ -266,9 +178,14 @@ void updateProjection(){
 
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
-	glMatrixMode(GL_MODELVIEW);
+	updateCamera();
 	glViewport(0,0, Vp.w, Vp.h); 
-	root.render();
+
+	glRotatef(xAngle, 1, 0, 0);
+	glRotatef(yAngle, 0, 1, 0);
+	glRotatef(zAngle, 0, 0, 1);
+
+	root.dibuja();
 
 	glutSwapBuffers(); // Hay dos buffers que se van intercambiando para ir pinando en ellos
 }
@@ -279,13 +196,21 @@ void keyPres(unsigned char key, int mX, int mY){
 	if(key == 27) {  /* Escape key */  
 		glutLeaveMainLoop (); //Freeglut's sentence for stopping glut's main loop 
 	} else if(key == 'i') { 
-		
+		xAngle = 0;
+		yAngle = 0;
+		zAngle = 0;
 	} else if(key == 'x') { 
-		
+		xAngle += 0.5;
+		yAngle = 0;
+		zAngle = 0;
 	} else if(key == 'y') { 
-		
+		xAngle = 0;
+		yAngle += 0.5;
+		zAngle = 0;
 	} else if(key == 'z') { 
-		
+		xAngle = 0;
+		yAngle = 0;
+		zAngle += 0.5;
 	} else {
 		need_redisplay = false;
 	}
