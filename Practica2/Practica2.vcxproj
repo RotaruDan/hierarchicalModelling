@@ -84,31 +84,19 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Axis.h" />
-    <ClInclude Include="Disk.h" />
-    <ClInclude Include="Earth.h" />
-    <ClInclude Include="glm.h" />
+    <ClInclude Include="Cara.h" />
     <ClInclude Include="Group.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="pixmap24RGB.h" />
-    <ClInclude Include="Satelite.h" />
-    <ClInclude Include="Sphere.h" />
-    <ClInclude Include="Sun.h" />
-    <ClInclude Include="TextureLoader.h" />
+    <ClInclude Include="Malla.h" />
+    <ClInclude Include="PuntoVector3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Axis.cpp" />
-    <ClCompile Include="Disk.cpp" />
-    <ClCompile Include="Earth.cpp" />
-    <ClCompile Include="glm.cpp" />
+    <ClCompile Include="Cara.cpp" />
     <ClCompile Include="Group.cpp" />
     <ClCompile Include="main1.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="pixmap24RGB.cpp" />
-    <ClCompile Include="Satelite.cpp" />
-    <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="Sun.cpp" />
-    <ClCompile Include="TextureLoader.cpp" />
+    <ClCompile Include="Malla.cpp" />
+    <ClCompile Include="PuntoVector3D.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

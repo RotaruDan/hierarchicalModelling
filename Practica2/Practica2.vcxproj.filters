@@ -21,34 +21,16 @@
     <ClInclude Include="Axis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Disk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Earth.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="glm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Group.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="Cara.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="pixmap24RGB.h">
+    <ClInclude Include="Malla.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Satelite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sun.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureLoader.h">
+    <ClInclude Include="PuntoVector3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,37 +41,19 @@
     <ClCompile Include="Axis.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Disk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Earth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="glm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Group.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
+    <ClCompile Include="Cara.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pixmap24RGB.cpp">
+    <ClCompile Include="Malla.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Satelite.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sun.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextureLoader.cpp">
+    <ClCompile Include="PuntoVector3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
