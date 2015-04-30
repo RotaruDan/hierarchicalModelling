@@ -8,6 +8,7 @@ class ObjetoCompuesto: public Objeto3D {
 	protected:
 		Objeto3D** hijos;
 		int numHijos;
+		GLfloat * m1;
 	public:
 		ObjetoCompuesto();
 		~ObjetoCompuesto();

@@ -83,17 +83,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cara.cpp" />
+    <ClCompile Include="Cubo.cpp" />
+    <ClCompile Include="Ejes.cpp" />
     <ClCompile Include="main1.cpp" />
     <ClCompile Include="Objeto3D.cpp" />
     <ClCompile Include="ObjetoCompuesto.cpp" />
     <ClCompile Include="PuntoVector3D.cpp" />
     <ClCompile Include="TAfin.cpp" />
+    <ClCompile Include="Vara.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cara.h" />
+    <ClInclude Include="Cubo.h" />
+    <ClInclude Include="Ejes.h" />
     <ClInclude Include="Objeto3D.h" />
     <ClInclude Include="ObjetoCompuesto.h" />
     <ClInclude Include="PuntoVector3D.h" />
     <ClInclude Include="TAfin.h" />
+    <ClInclude Include="Vara.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

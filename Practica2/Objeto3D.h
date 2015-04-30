@@ -8,6 +8,7 @@
 class Objeto3D {
    protected:   
 		TAfin* matriz;
+		GLfloat r, g, b, a;
 		
    public:	  	   
 	    Objeto3D();    
@@ -17,6 +18,11 @@ class Objeto3D {
 		void escala(GLfloat fX,GLfloat fY,GLfloat fZ);
 		void rota(GLfloat alfa,GLfloat fX,GLfloat fY,GLfloat fZ);
 		GLfloat* dameMatrizAfin();
+		void setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a);
+		GLfloat getR();
+		GLfloat getG();
+		GLfloat getB();
+		GLfloat getA();
 };
 
 #endif

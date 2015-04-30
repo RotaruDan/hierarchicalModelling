@@ -3,6 +3,7 @@
 
 Objeto3D:: Objeto3D() { 	 
     matriz = new TAfin();
+	setColor(1, 1, 1, 1);
 }
 
  
@@ -25,4 +26,28 @@ void Objeto3D:: escala(GLfloat fX,GLfloat fY,GLfloat fZ) {
 void Objeto3D:: rota(GLfloat alfa,GLfloat fX,GLfloat fY,GLfloat fZ) {
 	matriz->rota(alfa, fX, fY, fZ);
 }
+
+void Objeto3D::setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a){
+	Objeto3D::r = r;
+	Objeto3D::g = g;
+	Objeto3D::b = b;
+	Objeto3D::a = a;
+}
+
+GLfloat Objeto3D::getR(){
+	return r;
+}
+
+GLfloat Objeto3D::getG(){
+	return g;
+}
+
+GLfloat Objeto3D::getB(){
+	return b;
+}
+
+GLfloat Objeto3D::getA(){
+	return a;
+}
+
 
