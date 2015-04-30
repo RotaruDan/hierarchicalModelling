@@ -13,6 +13,9 @@
 #include <vector>
 
 #include "ObjetoCompuesto.h"
+#include "Ejes.h"
+#include "Cubo.h"
+#include "Vara.h"
 using namespace std;
 //---------------------------------------------------------------------------
 
@@ -38,13 +41,12 @@ viewCamera * currentView = &initial;
 GLdouble xAngle, yAngle, zAngle;
 
 // Scene
-ObjetoCompuesto root;
+ObjetoCompuesto * root;
 
 // prototipos
 void updateProjection();
 void updateCamera();
 void initScene();
-void split(const string& s, string c, vector<string>& v);
 void initGL();
 void resize(int wW, int wH);
 void display();
@@ -59,7 +61,7 @@ int main(int argc, char* argv[]){
 	glutInitWindowPosition(100,100);
 	glutInit(&argc,argv);
 	// Window construction
-	int win=glutCreateWindow("Práctica 2 - Malla por revolución");
+	int win=glutCreateWindow("Práctica 2 Opcional - Modelado jerárquico");
 	// Callback registration
   
 	glutDisplayFunc(display);
@@ -68,8 +70,55 @@ int main(int argc, char* argv[]){
 	// OpenGL basic setting
 	initGL();
 
+	ObjetoCompuesto raiz;
+	root = &raiz;
+
 	// iniciar la escena desde la raiz
-  
+	Ejes ejes(425);
+	raiz.introduceObjeto(&ejes);
+
+	GLdouble ladoCubo = 160;
+	GLdouble mitadLadocubo = ladoCubo * 0.5;
+	Cubo cubo(ladoCubo);
+	raiz.introduceObjeto(&cubo);
+	
+	char * archivo = "staff.outline";
+
+	Vara vara(archivo);
+	vara.setColor(0, 0, 1, 1);
+	vara.traslada(new PuntoVector3D(0, mitadLadocubo, 0, 1));
+	raiz.introduceObjeto(&vara);
+	
+	Vara vara2(archivo);
+	vara2.setColor(0, 0, 1, 1);
+	vara2.traslada(new PuntoVector3D(0, -mitadLadocubo, 0, 1));
+	vara2.rota(180, 1, 0, 0);
+	raiz.introduceObjeto(&vara2);
+
+	Vara vara3(archivo);
+	vara3.setColor(0, 0, 1, 1);
+	vara3.traslada(new PuntoVector3D(-mitadLadocubo, 0, 0, 1));
+	vara3.rota(90, 0, 0, 1);
+	raiz.introduceObjeto(&vara3);
+
+	Vara vara4(archivo);
+	vara4.setColor(0, 0, 1, 1);
+	vara4.traslada(new PuntoVector3D(mitadLadocubo, 0, 0, 1));
+	vara4.rota(-90, 0, 0, 1);
+	raiz.introduceObjeto(&vara4);
+
+	Vara vara5(archivo);
+	vara5.setColor(0, 0, 1, 1);
+	vara5.traslada(new PuntoVector3D(0, 0, mitadLadocubo, 1));
+	vara5.rota(90, 1, 0, 0);
+	raiz.introduceObjeto(&vara5);
+
+	Vara vara6(archivo);
+	vara6.setColor(0, 0, 1, 1);
+	vara6.traslada(new PuntoVector3D(0, 0, -mitadLadocubo, 1));
+	vara6.rota(-90, 1, 0, 0);
+	raiz.introduceObjeto(&vara6);
+
 	initScene();
 	// Classic glut's main loop can be stopped after X-closing the window, using freeglut's setting
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION) ;
@@ -80,20 +129,6 @@ int main(int argc, char* argv[]){
 	return 0;
 }
 //---------------------------------------------------------------------------
-
-void split(const string& s, string c,  vector<string>& v) {
-   string::size_type i = 0;
-   string::size_type j = s.find(c);
-
-   while (j != string::npos) {
-      v.push_back(s.substr(i, j-i));
-      i = ++j;
-      j = s.find(c, j);
-
-      if (j == string::npos)
-         v.push_back(s.substr(i, s.length()));
-   }
-}
 
 void initGL(){
 
@@ -112,7 +147,7 @@ void initGL(){
 	GLfloat light_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	GLfloat light_diffuse[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	GLfloat light_ambient[] = {0.0f, 0.0f, 0.0f, 1.0f};
-	GLfloat light_position[] = {100, 100, 100, 1.0f};
+	GLfloat light_position[] = {150, 150, 150, 1.0f};
 	
 	// enable lighting
 	glEnable(GL_LIGHTING);
@@ -131,7 +166,7 @@ void initGL(){
 
 	glShadeModel(GL_SMOOTH);
 
-	glClearColor(0, 0, 0, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
 	// Camera set up
 	updateCamera();
@@ -181,11 +216,11 @@ void display(void) {
 	updateCamera();
 	glViewport(0,0, Vp.w, Vp.h); 
 
-	glRotatef(xAngle, 1, 0, 0);
-	glRotatef(yAngle, 0, 1, 0);
-	glRotatef(zAngle, 0, 0, 1);
+	glRotated(xAngle, 1, 0, 0);
+	glRotated(yAngle, 0, 1, 0);
+	glRotated(zAngle, 0, 0, 1);
 
-	root.dibuja();
+	root->dibuja();
 
 	glutSwapBuffers(); // Hay dos buffers que se van intercambiando para ir pinando en ellos
 }
@@ -200,17 +235,17 @@ void keyPres(unsigned char key, int mX, int mY){
 		yAngle = 0;
 		zAngle = 0;
 	} else if(key == 'x') { 
-		xAngle += 0.5;
+		xAngle++;
 		yAngle = 0;
 		zAngle = 0;
 	} else if(key == 'y') { 
 		xAngle = 0;
-		yAngle += 0.5;
+		yAngle++;
 		zAngle = 0;
 	} else if(key == 'z') { 
 		xAngle = 0;
 		yAngle = 0;
-		zAngle += 0.5;
+		zAngle++;
 	} else {
 		need_redisplay = false;
 	}
